@@ -1,40 +1,35 @@
-from fastapi import APIRouter 
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+
+from app.database import get_db
+from app.models.listing import CropListing
+
+
 router = APIRouter(
     prefix="/api/crops",
     tags=["Crops"]
 )
 
-crops=[
-{
-        "id": 1,
-        "crop_name": "tomato",
-        "quantity": 500,
-        "unit": "kg",
-        "expected_price": 25,
-        "location": "Mangalore"
-    },
-    {
-        "id": 2,
-        "crop_name": "rice",
-        "quantity": 1000,
-        "unit": "kg",
-        "expected_price": 42,
-        "location": "Udupi"
-    },
-    {
-        "id": 3,
-        "crop_name": "onion",
-        "quantity": 300,
-        "unit": "kg",
-        "expected_price": 30,
-        "location": "Mangalore"
-    }
-]
 
 @router.get("/")
-def get_all_crops():
+def get_all_crops(db:Session=Depends(get_db)):
+    crop=db.query(CropListing).all()
+
     return {
         "success": True,
-        "count": len(crops),
-        "crops": crops
+        "count": len(crop),
+        "crops": [
+            {
+                "id": crop.id,
+                "crop_name": crop.crop_name,
+                "quantity": crop.quantity,
+                "unit": crop.unit,
+                "expected_price": crop.expected_price,
+                "location": crop.location,
+                "status": crop.status,
+                "created_at": crop.created_at
+            }
+            for crop in crop
+        ]
     }
+
