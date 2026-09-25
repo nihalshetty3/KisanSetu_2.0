@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models.listing import CropListing
+from app.models.crop import Crop
 
 
 router = APIRouter(
@@ -13,23 +13,24 @@ router = APIRouter(
 
 @router.get("/")
 def get_all_crops(db:Session=Depends(get_db)):
-    crop=db.query(CropListing).all()
+
+    listings=db.query(Crop).all()
+
 
     return {
         "success": True,
-        "count": len(crop),
-        "crops": [
+        "count": len(listings),
+        "listings": [
             {
-                "id": crop.id,
-                "crop_name": crop.crop_name,
-                "quantity": crop.quantity,
-                "unit": crop.unit,
-                "expected_price": crop.expected_price,
-                "location": crop.location,
-                "status": crop.status,
-                "created_at": crop.created_at
+                "listing_id": listing.crop_id,
+                "farmer_id": listing.farmer_id,
+                "crop_name": listing.crop_name,
+                "quantity": listing.quantity,
+                "unit": listing.unit,
+                "expected_price": listing.expected_price,
+                "location": listing.location
             }
-            for crop in crop
+            for listing in listings
         ]
     }
 
