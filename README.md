@@ -30,6 +30,11 @@ Farmer Receives SMS
    │
    ▼
 Bid Status Updated
+
+
+
+## Workflow completed till date
+
                  KisanSetu
                      │
                      ▼
