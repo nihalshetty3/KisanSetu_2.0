@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.bid import Bid
 from app.models.crop import Crop
-from app.schemas.bid import BidCreate
+from app.schemas.bids import BidCreate
 
 router=APIRouter(
       prefix="/api/bids",
