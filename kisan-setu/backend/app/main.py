@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from app.database import Base, engine
 from app.models.listing import CropListing
 from app.models.farmer import Farmer
+from app.models.bid import Bid
+
 
 
 from app.routes.listings import router as listing_router
