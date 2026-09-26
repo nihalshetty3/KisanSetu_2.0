@@ -8,7 +8,7 @@ from app.models.farmer import Farmer
 from app.routes.listings import router as listing_router
 from app.routes.crops import router as crops_router
 from app.routes.bids import router as bids_router 
-
+from app.routes.sms import router as sms_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -21,6 +21,7 @@ app = FastAPI(
 app.include_router(listing_router)
 app.include_router(crops_router)
 app.include_router(bids_router)
+app.include_router(sms_router)
 
 @app.get("/")
 def root():
