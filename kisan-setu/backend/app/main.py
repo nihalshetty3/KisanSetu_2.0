@@ -1,7 +1,16 @@
-from fastapi import FastAPI 
+from fastapi import FastAPI
+
+from app.database import Base, engine
+from app.models.listing import CropListing
+from app.models.farmer import Farmer
+
+
 from app.routes.listings import router as listing_router
 from app.routes.crops import router as crops_router
 from app.routes.bids import router as bids_router 
+
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="KisanSetu API",
